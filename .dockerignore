@@ -1,0 +1,7 @@
+.git
+.local
+evidence
+docs
+tests
+__pycache__
+*.pyc

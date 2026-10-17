@@ -1,0 +1,52 @@
+name: docker-lab
+services:
+  api:
+    build: .
+    image: docker-lab-api:local
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      DB_HOST: db
+      DB_NAME: notes
+      DB_USER: lab
+      DB_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/readyz', timeout=3)"]
+      interval: 5s
+      timeout: 4s
+      retries: 6
+      start_period: 10s
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+  db:
+    image: postgres:17-bookworm@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826
+    environment:
+      POSTGRES_DB: notes
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab -d notes"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+secrets:
+  db_password:
+    file: .local/db-password
+volumes:
+  pgdata:

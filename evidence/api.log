@@ -1,0 +1,25 @@
+api-1  | Schema ready
+api-1  | [2026-10-17 21:53:41 +0000] [1] [INFO] Starting gunicorn 23.0.0
+api-1  | [2026-10-17 21:53:41 +0000] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+api-1  | [2026-10-17 21:53:41 +0000] [1] [INFO] Using worker: sync
+api-1  | [2026-10-17 21:53:41 +0000] [8] [INFO] Booting worker with pid: 8
+api-1  | [2026-10-17 21:53:41 +0000] [9] [INFO] Booting worker with pid: 9
+api-1  | 127.0.0.1 - - [17/Oct/2026:21:53:46 +0000] "GET /readyz HTTP/1.1" 200 19 "-" "Python-urllib/3.13"
+api-1  | 172.19.0.1 - - [17/Oct/2026:21:53:46 +0000] "GET /readyz HTTP/1.1" 200 19 "-" "Python-urllib/3.14"
+api-1  | 172.19.0.1 - - [17/Oct/2026:21:53:46 +0000] "GET /notes HTTP/1.1" 200 124 "-" "Python-urllib/3.14"
+api-1  | 172.19.0.1 - - [17/Oct/2026:21:53:46 +0000] "GET /healthz HTTP/1.1" 200 19 "-" "Python-urllib/3.14"
+api-1  | [2026-10-17 21:53:47,050] WARNING in server: Database request failed (OperationalError)
+api-1  | 172.19.0.1 - - [17/Oct/2026:21:53:47 +0000] "GET /readyz HTTP/1.1" 503 33 "-" "Python-urllib/3.14"
+api-1  | [2026-10-17 21:53:47,060] WARNING in server: Database request failed (OperationalError)
+api-1  | 172.19.0.1 - - [17/Oct/2026:21:53:47 +0000] "GET /notes HTTP/1.1" 503 33 "-" "Python-urllib/3.14"
+api-1  | [2026-10-17 21:53:47,745] WARNING in server: Database request failed (OperationalError)
+api-1  | 172.19.0.1 - - [17/Oct/2026:21:53:47 +0000] "GET /readyz HTTP/1.1" 503 33 "-" "Python-urllib/3.14"
+api-1  | 172.19.0.1 - - [17/Oct/2026:21:53:48 +0000] "GET /readyz HTTP/1.1" 200 19 "-" "Python-urllib/3.14"
+api-1  | 172.19.0.1 - - [17/Oct/2026:21:53:48 +0000] "GET /notes HTTP/1.1" 200 124 "-" "Python-urllib/3.14"
+api-1  | 172.19.0.1 - - [17/Oct/2026:21:53:48 +0000] "GET /readyz HTTP/1.1" 200 19 "-" "Python-urllib/3.14"
+api-1  | 172.19.0.1 - - [17/Oct/2026:21:53:48 +0000] "DELETE /notes/1 HTTP/1.1" 204 0 "-" "Python-urllib/3.14"
+api-1  | 172.19.0.1 - - [17/Oct/2026:21:53:48 +0000] "DELETE /notes/1 HTTP/1.1" 404 27 "-" "Python-urllib/3.14"
+api-1  | 127.0.0.1 - - [17/Oct/2026:21:53:51 +0000] "GET /readyz HTTP/1.1" 200 19 "-" "Python-urllib/3.13"
+api-1  | 127.0.0.1 - - [17/Oct/2026:21:53:56 +0000] "GET /readyz HTTP/1.1" 200 19 "-" "Python-urllib/3.13"
+api-1  | 127.0.0.1 - - [17/Oct/2026:21:54:01 +0000] "GET /readyz HTTP/1.1" 200 19 "-" "Python-urllib/3.13"
+api-1  | 127.0.0.1 - - [17/Oct/2026:21:54:07 +0000] "GET /readyz HTTP/1.1" 200 19 "-" "Python-urllib/3.13"

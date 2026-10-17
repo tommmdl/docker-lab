@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Docker Lab · Notes</title>
+<style>
+body{background:#101722;color:#eef3fa;font:17px system-ui;max-width:760px;margin:7vh auto;padding:24px}header{display:flex;justify-content:space-between;align-items:center}small{color:#91b4db}h1{font-size:2.6rem}form{display:flex;gap:10px}input{flex:1;min-width:0}input,button,select{font:inherit;padding:12px;border-radius:8px;border:1px solid #415673;background:#1c2a3d;color:inherit}button{cursor:pointer}form button{background:#245bcd}ul{padding:0;list-style:none}li{display:flex;justify-content:space-between;align-items:center;gap:18px;border-bottom:1px solid #304057;padding:15px 0}li span{overflow-wrap:anywhere}#status{min-height:28px;color:#a7c4ec}footer{color:#9aaac0;margin-top:40px}a{color:#a7c4ec}
+</style>
+<header><small>DOCKER LAB / NOTES</small><select id="language" aria-label="Language"><option value="pt">Português</option><option value="en">English</option></select></header>
+<h1 id="heading">Notas persistentes.</h1>
+<p id="intro">Crie uma nota e explore a persistência com Docker Compose.</p>
+<form id="form"><input id="title" aria-label="Título / Title" maxlength="200" required autocomplete="off"><button id="add">Adicionar</button></form>
+<p id="status" role="status" aria-live="polite"></p><ul id="notes"></ul>
+<footer>Flask + Gunicorn → PostgreSQL · <a href="https://github.com/tommmdl/docker-lab">GitHub</a></footer>
+<script>
+const copy={pt:{heading:'Notas persistentes.',intro:'Crie uma nota e explore a persistência com Docker Compose.',add:'Adicionar',remove:'Excluir',empty:'Nenhuma nota ainda.',error:'Não foi possível acessar o serviço. Tente novamente.',placeholder:'O que você aprendeu hoje?'},en:{heading:'Persistent notes.',intro:'Create a note and explore persistence with Docker Compose.',add:'Add note',remove:'Delete',empty:'No notes yet.',error:'Could not reach the service. Try again.',placeholder:'What did you learn today?'}};
+const $=id=>document.getElementById(id);let lang='pt';
+async function api(path,options){const response=await fetch(path,options);if(!response.ok)throw Error(response.status);return response.status===204?null:response.json();}
+async function load(){try{const data=await api('/notes');$('notes').replaceChildren();$('status').textContent=data.notes.length?'':copy[lang].empty;for(const note of data.notes){const row=document.createElement('li'),text=document.createElement('span'),button=document.createElement('button');text.textContent=note.title;button.textContent=copy[lang].remove;button.onclick=async()=>{try{await api('/notes/'+note.id,{method:'DELETE'});await load();}catch{$('status').textContent=copy[lang].error;}};row.append(text,button);$('notes').append(row);}}catch{$('status').textContent=copy[lang].error;}}
+function translate(){document.documentElement.lang=lang==='pt'?'pt-BR':'en';for(const id of ['heading','intro','add'])$(id).textContent=copy[lang][id];$('title').placeholder=copy[lang].placeholder;load();}
+$('language').onchange=()=>{lang=$('language').value;translate();};
+$('form').onsubmit=async event=>{event.preventDefault();$('add').disabled=true;try{await api('/notes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:$('title').value})});$('title').value='';await load();}catch{$('status').textContent=copy[lang].error;}finally{$('add').disabled=false;}};
+translate();
+</script>
+</html>
