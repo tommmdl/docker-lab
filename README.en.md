@@ -17,7 +17,7 @@ bash scripts/compose.sh up -d --build --wait --wait-timeout 180
 
 Open **http://localhost:8000** and create a note. Use the language selector to switch between Portuguese and English. This lab API has no authentication; its published port binds only to localhost. The database has no published host port.
 
-`prepare.sh` generates a random password in `.local/db-password` and preserves existing passwords. If Compose is missing, it downloads official version 5.6.0, verifies SHA-256 and installs it only within `.local/`. The `compose.sh` wrapper supports both global and local plugins. Local secrets and binaries are excluded from Git and the build context.
+`prepare.sh` generates a random password in `.local/db-password` and preserves existing passwords. If Compose is missing, it downloads official version 5.6.0, verifies SHA-256 and installs it only within `.local/`. The `compose.sh` wrapper supports both global and local plugins. Local secrets and binaries are excluded from Git and the build context. On Linux, `.local/` uses host mode 0700; the password file uses 0644 so the non-root container UID can read the Compose bind mount. Permission isolation depends on the filesystem; DrvFS/Windows may apply different ACLs.
 
 ## Architecture
 

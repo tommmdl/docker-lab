@@ -6,9 +6,12 @@ from pathlib import Path
 import secrets
 p = Path('.local/db-password')
 p.parent.mkdir(exist_ok=True)
+p.parent.chmod(0o700)
 if not p.exists():
     p.write_text(secrets.token_urlsafe(32))
-    p.chmod(0o600)
+# Local Compose secrets are bind-mounted; the non-root API UID must read the file.
+# Protect host access with the parent directory rather than an owner-only file.
+p.chmod(0o644)
 print('Local database password ready; existing password preserved.')
 PY
 if ! docker compose version >/dev/null 2>&1; then

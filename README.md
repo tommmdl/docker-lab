@@ -17,7 +17,7 @@ bash scripts/compose.sh up -d --build --wait --wait-timeout 180
 
 Abra **http://localhost:8000** e crie uma nota. O seletor de idioma altera a interface entre português e inglês. A API não possui autenticação neste laboratório; a porta é vinculada somente a localhost. O banco não publica porta no host.
 
-`prepare.sh` gera uma senha aleatória em `.local/db-password` e preserva o arquivo em execuções seguintes. Se Compose não estiver instalado, baixa a versão oficial 5.6.0, verifica o SHA-256 e instala apenas dentro de `.local/`. O wrapper `compose.sh` funciona com o plugin global ou o plugin local. Segredos e binários locais são ignorados pelo Git e pelo contexto de build.
+`prepare.sh` gera uma senha aleatória em `.local/db-password` e preserva o arquivo em execuções seguintes. Se Compose não estiver instalado, baixa a versão oficial 5.6.0, verifica o SHA-256 e instala apenas dentro de `.local/`. O wrapper `compose.sh` funciona com o plugin global ou o plugin local. Segredos e binários locais são ignorados pelo Git e pelo contexto de build. Em Linux, `.local/` usa modo 0700 no host; o arquivo de senha usa 0644 para permitir leitura pelo UID não root no bind mount do Compose. O isolamento por permissões depende do sistema de arquivos; o DrvFS/Windows pode aplicar ACLs diferentes.
 
 ## Arquitetura
 
