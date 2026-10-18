@@ -45,3 +45,5 @@ As notas ficam no volume. Adicionar `-v` apaga esses dados. A API fica acessíve
 O [guia de uso](docs/guide.md) reúne arquitetura, configuração, testes, limitações e ajuda para investigar problemas. O [portfólio](https://github.com/tommmdl/devops-portfolio) conecta este projeto aos outros laboratórios.
 
 [Sobre a revisão do histórico](docs/history.md)
+
+Veja as [correções nas imagens e os achados restantes](docs/remediation.md).

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Integration and lifecycle checks; run only against this local lab."""
 import json
+import os
 from pathlib import Path
 import subprocess
 import time
@@ -9,7 +10,7 @@ import urllib.request
 import uuid
 
 ROOT = Path(__file__).resolve().parent.parent
-BASE = 'http://127.0.0.1:8000'
+BASE = os.environ.get('API_BASE_URL', 'http://127.0.0.1:8000')
 checks = []
 
 

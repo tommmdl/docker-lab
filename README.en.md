@@ -45,3 +45,5 @@ The notes remain in the volume. Adding `-v` deletes them. The API binds only to 
 The [usage guide](docs/guide.en.md) covers architecture, configuration, tests, limitations and troubleshooting. The [portfolio](https://github.com/tommmdl/devops-portfolio) connects this project to the other labs.
 
 [About the history update](docs/history.md)
+
+Read about the [image updates and remaining findings](docs/remediation.en.md).
