@@ -47,3 +47,5 @@ O [guia de uso](docs/guide.md) reúne arquitetura, configuração, testes, limit
 [Sobre a revisão do histórico](docs/history.md)
 
 Veja as [correções nas imagens e os achados restantes](docs/remediation.md).
+
+Validação das correções: 23 testes do Compose, restauração controlada de três notas da imagem original do PostgreSQL para a recompilada e 19 testes locais de tracing. A aplicação do Argo CD está Synced/Healthy e mantém o mesmo PVC. As evidências completas e as pendências estão no link acima.

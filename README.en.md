@@ -47,3 +47,5 @@ The [usage guide](docs/guide.en.md) covers architecture, configuration, tests, l
 [About the history update](docs/history.md)
 
 Read about the [image updates and remaining findings](docs/remediation.en.md).
+
+Remediation validation: 23 Compose checks, a controlled restore of three notes from the original PostgreSQL image into the rebuilt image, and 19 local tracing checks. The running Argo CD application is Synced/Healthy and retains the same PVC. Full evidence and remaining issues are linked above.
