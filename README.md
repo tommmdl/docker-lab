@@ -59,3 +59,5 @@ A [análise dos críticos do PostgreSQL e o endurecimento do banco](docs/databas
 A [alternativa PostgreSQL Alpine](docs/postgres-alternative.md) testa a libxml2 corrigida em outro volume, com restauração e retorno lógico. Esse teste foi seguido pela adoção documentada acima.
 
 A [análise dos HIGH da API](https://github.com/tommmdl/security-lab/blob/main/docs/api-high-review.md) agrupa 44 ocorrências em oito CVEs e confere os pré-requisitos reais. Limites de recursos e restrições de privilégio mitigam a exposição; a imagem da API continua bloqueada e os achados completos permanecem visíveis.
+
+O [ensaio da API Alpine](https://github.com/tommmdl/security-lab/blob/main/docs/api-alpine.md) testa as imagens básica e instrumentada com scans completos, aplicação e tracing real por Collector/Tempo/Grafana/Loki. Usa workloads e bancos separados; os pins da API principal continuam iguais.

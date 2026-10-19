@@ -59,3 +59,5 @@ The [PostgreSQL critical-finding review and hardening](docs/database-hardening.e
 The [Alpine PostgreSQL alternative](docs/postgres-alternative.en.md) tests a fixed libxml2 in a separate volume, with logical restore and rollback checks. That test was followed by the adoption documented above.
 
 The [API HIGH-finding review](https://github.com/tommmdl/security-lab/blob/main/docs/api-high-review.en.md) groups 44 occurrences into eight CVEs and checks their actual prerequisites. Resource bounds and privilege restrictions mitigate exposure; the API image stays blocked and full findings remain visible.
+
+The [Alpine API experiment](https://github.com/tommmdl/security-lab/blob/main/docs/api-alpine.en.md) tests both basic and instrumented images with full scans, application checks and real Collector/Tempo/Grafana/Loki tracing. It uses separate workloads and databases; main API image pins remain unchanged.
