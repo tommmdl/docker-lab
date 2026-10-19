@@ -1,0 +1,4 @@
+# Explicit overlay for a separate project. Start with --no-build.
+services:
+  api:
+    image: ${API_ALPINE_IMAGE:-docker-lab-api-alpine:local}
