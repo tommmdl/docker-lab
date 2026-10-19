@@ -1,10 +1,10 @@
 # Docker: uma aplicação, um banco e algumas falhas
 
 [English](README.en.md) · Português
+
 ## Banco atual: Alpine, com rollback testado
 
 Os labs agora usam a imagem PostgreSQL Alpine testada, fixada por digest. A adoção usou backup lógico e volumes novos; os volumes Debian originais continuam guardados. O rollback real da API preservou uma nota criada depois da troca. Veja o [procedimento de migração, backup e recuperação](docs/postgres-adoption.md). Os relatórios de segurança anteriores continuam disponíveis.
-
 
 Uma aplicação de notas é simples o bastante para deixar o foco no que acontece ao redor dela. Aqui, a API e o PostgreSQL rodam em containers separados, e o Compose cuida de conectá-los.
 
