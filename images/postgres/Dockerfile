@@ -13,3 +13,11 @@ RUN git clone https://github.com/tianon/gosu.git /src \
 FROM postgres:17-bookworm@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826
 COPY --from=gosu /out/gosu /usr/local/bin/gosu
 RUN gosu nobody id && gosu postgres id && postgres --version
+
+# Build-time key-management tools are not needed to serve this database.
+RUN apt-get purge -y --auto-remove libsqlite3-0 \
+    && test "$(dpkg-query -W -f='${db:Status-Status}' libsqlite3-0 2>/dev/null || true)" != installed \
+    && command -v gpgv \
+    && postgres --version
+COPY --chmod=0755 harden.sh /usr/local/bin/lab-db-harden
+COPY --chmod=0755 init-hardening.sh /docker-entrypoint-initdb.d/10-lab-hardening.sh
