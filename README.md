@@ -2,6 +2,10 @@
 
 [English](README.en.md) · Português
 
+## API atual: Alpine, incluindo OpenTelemetry
+
+Os labs principais agora usam os digests Alpine publicados: API básica no Docker/Kubernetes básico e instrumentada no workload GitOps de tracing. Restauramos backups em separado e o rollback real de imagem preservou notas criadas depois da troca. Imagens, credenciais e volumes dos bancos continuam os mesmos. [Adoção, rollback testado e evidências completas](https://github.com/tommmdl/security-lab/blob/main/docs/api-adoption.md). Os achados Debian guardados continuam visíveis.
+
 ## Banco atual: Alpine, com rollback testado
 
 Os labs agora usam a imagem PostgreSQL Alpine testada, fixada por digest. A adoção usou backup lógico e volumes novos; os volumes Debian originais continuam guardados. O rollback real da API preservou uma nota criada depois da troca. Veja o [procedimento de migração, backup e recuperação](docs/postgres-adoption.md). Os relatórios de segurança anteriores continuam disponíveis.
@@ -18,7 +22,7 @@ Na raiz deste repositório:
 
 ```bash
 bash scripts/prepare.sh
-bash scripts/compose.sh up -d --build --wait --wait-timeout 180
+bash scripts/compose.sh up -d --no-build --wait --wait-timeout 180
 ```
 
 Abra http://localhost:8000 e crie uma nota. O seletor no topo alterna a interface entre português e inglês.

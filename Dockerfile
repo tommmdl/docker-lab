@@ -1,14 +1,13 @@
-FROM python:3.13-slim@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f
+FROM python:3.13.16-alpine3.24@sha256:2d9aefe2fef018a7eb2c13064c89c71929800fd2e5dccdbf52ea5da5bb8d929a
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends liblzma5=5.8.1-1+deb13u2 \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache zlib=1.3.2-r1
 WORKDIR /app
 COPY requirements.lock .
-RUN pip install --no-cache-dir -r requirements.lock \
+# Fail rather than silently compiling platform-dependent dependencies.
+RUN pip install --only-binary=:all: --no-cache-dir -r requirements.lock \
     && pip uninstall -y pip \
-    && python -c "import ensurepip, pathlib, shutil; shutil.rmtree(pathlib.Path(ensurepip.__file__).parent)" \
-    && useradd --uid 10001 --create-home app
+    && python -c "import ensurepip,pathlib,shutil; shutil.rmtree(pathlib.Path(ensurepip.__file__).parent)" \
+    && addgroup -g 10001 app && adduser -D -u 10001 -G app app
 COPY app/ ./
 USER 10001:10001
 EXPOSE 8000

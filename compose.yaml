@@ -4,8 +4,7 @@ services:
     mem_limit: 256m
     cpus: 1.0
     pids_limit: 128
-    build: .
-    image: docker-lab-api:local
+    image: ghcr.io/tommmdl/docker-lab@sha256:ae2e93fdbab7bc912897e6524b3e17b982e97cfb29bcb4fc36d9c014d615eb91
     ports:
       - "127.0.0.1:${API_PORT:-8000}:8000"
     environment:
