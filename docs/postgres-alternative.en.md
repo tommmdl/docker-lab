@@ -2,6 +2,8 @@
 
 [Português](postgres-alternative.md) · English
 
+This page records the earlier isolated test. Alpine has since been adopted in Docker and Kubernetes; see the [current adoption and rollback procedure](postgres-adoption.en.md).
+
 The alternative keeps PostgreSQL 17.11 and moves to Alpine 3.24.2, with libxml2 2.13.9-r2. The CVE-2026-6653 finding is absent. The raw official image brought back an old Go runtime in gosu, so our Dockerfile copies only the static, already-corrected helper from the pinned Bookworm derivative. Debian libraries do not enter the final filesystem. zlib is updated to the available 1.3.2-r1 package.
 
 The full scan reports zero findings in this Trivy database snapshot, with package inventory present and the same policy. This is not a guarantee that the image has no vulnerabilities. Intermediate reports retain the upstream Go findings and the zlib finding before its update. [Complete comparison and sources](https://github.com/tommmdl/security-lab/blob/main/docs/postgres-alternative.en.md).

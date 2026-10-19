@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[1]
 uid=uuid.uuid4().hex[:10]
 folder=ROOT/'.local'/('postgres-alternative-'+uid);folder.mkdir(parents=True)
 baseline='ghcr.io/tommmdl/docker-lab@sha256:be42c09595d7059956490eeab607b742afc96268db48f91f4eb1fd53edc89b52'
-override=folder/'source.json';override.write_text(json.dumps({'services':{'db':{'image':baseline},'api':{'image':os.environ.get('ALTERNATIVE_API_IMAGE','docker-lab-api:local')}}}))
+override=folder/'source.json';override.write_text(json.dumps({'services':{'db':{'image':baseline,'environment':{'POSTGRES_INITDB_ARGS':'--encoding=UTF8 --locale=en_US.utf8'}},'api':{'image':os.environ.get('ALTERNATIVE_API_IMAGE','docker-lab-api:local')}}}))
 def free_port():
     with socket.socket() as s:s.bind(('127.0.0.1',0));return s.getsockname()[1]
 def environment(name,files,port,expected_uid):

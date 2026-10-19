@@ -63,7 +63,7 @@ for name,condition in [
  ('Database CPU is limited to one core',state['HostConfig']['NanoCpus']==1000000000),
  ('Database PID count is limited to 256',state['HostConfig']['PidsLimit']==256),
  ('Database does not publish a host port',not state['HostConfig']['PortBindings']),
- ('Database main process runs as expected non-root UID',compose('exec','-T','db','sh','-c',"awk '/^Uid:/{print $2}' /proc/1/status").strip()==os.environ.get('DB_EXPECTED_UID','999') and os.environ.get('DB_EXPECTED_UID','999')!='0'),
+ ('Database main process runs as expected non-root UID',compose('exec','-T','db','sh','-c',"awk '/^Uid:/{print $2}' /proc/1/status").strip()==os.environ.get('DB_EXPECTED_UID','70') and os.environ.get('DB_EXPECTED_UID','70')!='0'),
 ]:
     if not condition:raise AssertionError(name)
     result['checks'].append(name)

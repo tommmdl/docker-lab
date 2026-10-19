@@ -6,10 +6,12 @@ ROOT=Path(__file__).resolve().parents[1]
 project='notes-upgrade-test-'+uuid.uuid4().hex[:10]
 with socket.socket() as sock:
     sock.bind(('127.0.0.1',0));port=sock.getsockname()[1]
-env=dict(os.environ,COMPOSE_PROJECT_NAME=project,API_PORT=str(port),API_BASE_URL=f'http://127.0.0.1:{port}')
+env=dict(os.environ,COMPOSE_PROJECT_NAME=project,API_PORT=str(port),API_BASE_URL=f'http://127.0.0.1:{port}',DB_EXPECTED_UID='999')
 folder=ROOT/'.local'/project;folder.mkdir(parents=True)
 original='ghcr.io/tommmdl/docker-lab@sha256:3150abf7b42612192bce29be02c49880eb17f0f97c93b5527a58ae7454e97dec'
-override=folder/'original.json';override.write_text(json.dumps({'services':{'db':{'image':original}}}))
+legacy=folder/'legacy.json';legacy.write_text(json.dumps({'services':{'db':{'image':'docker-lab-postgres:local','environment':{'POSTGRES_INITDB_ARGS':'--encoding=UTF8 --locale=en_US.utf8'}}}}))
+env['COMPOSE_FILE']=str(ROOT/'compose.yaml')+os.pathsep+str(legacy)
+override=folder/'original.json';override.write_text(json.dumps({'services':{'db':{'image':original,'environment':{'POSTGRES_INITDB_ARGS':'--encoding=UTF8 --locale=en_US.utf8'}}}}))
 def compose(*args):
     return subprocess.check_output(['bash','scripts/compose.sh','-p',project,*args],cwd=ROOT,env=env,text=True)
 def call(path,body=None):

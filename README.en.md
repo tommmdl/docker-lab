@@ -1,6 +1,10 @@
 # Docker: an app, a database and a few failures
 
 English · [Português](README.md)
+## Current database: Alpine, with a tested rollback
+
+The labs now use the tested PostgreSQL Alpine image by digest. Adoption used logical backups and new volumes; original Debian volumes are retained. Actual API rollback preserved a note written after cutover. Read the [migration, backup and recovery procedure](docs/postgres-adoption.en.md). Earlier security reports remain available.
+
 
 A notes app is small enough to keep the focus on the infrastructure around it. Here, the API and PostgreSQL run in separate containers, connected through Compose.
 
@@ -52,4 +56,4 @@ Remediation validation: 23 Compose checks, a controlled restore of three notes f
 
 The [PostgreSQL critical-finding review and hardening](docs/database-hardening.en.md) explains the smaller image, application/maintenance roles and the checks for existing volumes.
 
-The [Alpine PostgreSQL alternative](docs/postgres-alternative.en.md) tests a fixed libxml2 in a separate volume, with logical restore and rollback checks. The default database is preserved.
+The [Alpine PostgreSQL alternative](docs/postgres-alternative.en.md) tests a fixed libxml2 in a separate volume, with logical restore and rollback checks. That test was followed by the adoption documented above.
