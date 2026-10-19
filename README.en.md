@@ -57,3 +57,5 @@ Remediation validation: 23 Compose checks, a controlled restore of three notes f
 The [PostgreSQL critical-finding review and hardening](docs/database-hardening.en.md) explains the smaller image, application/maintenance roles and the checks for existing volumes.
 
 The [Alpine PostgreSQL alternative](docs/postgres-alternative.en.md) tests a fixed libxml2 in a separate volume, with logical restore and rollback checks. That test was followed by the adoption documented above.
+
+The [API HIGH-finding review](https://github.com/tommmdl/security-lab/blob/main/docs/api-high-review.en.md) groups 44 occurrences into eight CVEs and checks their actual prerequisites. Resource bounds and privilege restrictions mitigate exposure; the API image stays blocked and full findings remain visible.

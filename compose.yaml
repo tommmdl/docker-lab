@@ -1,6 +1,9 @@
 name: docker-lab
 services:
   api:
+    mem_limit: 256m
+    cpus: 1.0
+    pids_limit: 128
     build: .
     image: docker-lab-api:local
     ports:
@@ -23,7 +26,7 @@ services:
       start_period: 10s
     read_only: true
     tmpfs:
-      - /tmp
+      - /tmp:rw,noexec,nosuid,nodev,size=64m
     cap_drop:
       - ALL
     security_opt:

@@ -57,3 +57,5 @@ Validação das correções: 23 testes do Compose, restauração controlada de t
 A [análise dos críticos do PostgreSQL e o endurecimento do banco](docs/database-hardening.md) explica a imagem menor, as contas da aplicação/manutenção e os testes com volumes existentes.
 
 A [alternativa PostgreSQL Alpine](docs/postgres-alternative.md) testa a libxml2 corrigida em outro volume, com restauração e retorno lógico. Esse teste foi seguido pela adoção documentada acima.
+
+A [análise dos HIGH da API](https://github.com/tommmdl/security-lab/blob/main/docs/api-high-review.md) agrupa 44 ocorrências em oito CVEs e confere os pré-requisitos reais. Limites de recursos e restrições de privilégio mitigam a exposição; a imagem da API continua bloqueada e os achados completos permanecem visíveis.
