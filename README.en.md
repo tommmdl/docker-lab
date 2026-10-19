@@ -51,3 +51,5 @@ Read about the [image updates and remaining findings](docs/remediation.en.md).
 Remediation validation: 23 Compose checks, a controlled restore of three notes from the original PostgreSQL image into the rebuilt image, and 19 local tracing checks. The running Argo CD application is Synced/Healthy and retains the same PVC. Full evidence and remaining issues are linked above.
 
 The [PostgreSQL critical-finding review and hardening](docs/database-hardening.en.md) explains the smaller image, application/maintenance roles and the checks for existing volumes.
+
+The [Alpine PostgreSQL alternative](docs/postgres-alternative.en.md) tests a fixed libxml2 in a separate volume, with logical restore and rollback checks. The default database is preserved.

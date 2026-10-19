@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Safe privilege and residual XML checks, using this lab's Compose project."""
 import json
+import os
 from pathlib import Path
 import subprocess
 
@@ -30,7 +31,7 @@ with connect() as c:
     settings=c.execute("SELECT rolconfig FROM pg_roles WHERE rolname=current_user").fetchone()[0]
     check('Default statement timeout is 5 seconds',c.execute('SHOW statement_timeout').fetchone()[0]=='5s' and 'statement_timeout=5s' in settings)
     check('Idle transaction timeout is 10 seconds',c.execute('SHOW idle_in_transaction_session_timeout').fetchone()[0]=='10s' and 'idle_in_transaction_session_timeout=10s' in settings)
-    check('Benign XML parsing remains reachable: residual libxml2 risk is not eliminated',c.execute("SELECT XMLPARSE(DOCUMENT '<root/>' )::text").fetchone()[0]=='<root/>')
+    check('Benign SQL XML parsing is available',c.execute("SELECT XMLPARSE(DOCUMENT '<root/>' )::text").fetchone()[0]=='<root/>')
 check('Application cannot become the maintenance role',forbidden('SET ROLE notes_admin'))
 check('Application cannot become the bootstrap superuser',forbidden('SET ROLE notes_bootstrap'))
 check('Application cannot read server files',forbidden("SELECT pg_read_file('/etc/hostname')"))
@@ -52,7 +53,7 @@ with urllib.request.urlopen(request,timeout=8) as response:
     note=json.load(response);check('XML-looking title stays literal text through the API',response.status==201 and note['title']=='<root>&unknown;</root>')
 request=urllib.request.Request('http://127.0.0.1:8000/notes/'+str(note['id']),method='DELETE')
 with urllib.request.urlopen(request,timeout=8) as response:check('Security test note is deleted',response.status==204)
-print(json.dumps({'checks_passed':len(checks),'checks':checks,'residual_xml_parser_reachable':True}))
+print(json.dumps({'checks_passed':len(checks),'checks':checks,'xml_parser_reachable':True}))
 '''
 result=json.loads(compose('exec','-T','api','python','-c',code))
 container=compose('ps','-q','db').strip()
@@ -62,7 +63,7 @@ for name,condition in [
  ('Database CPU is limited to one core',state['HostConfig']['NanoCpus']==1000000000),
  ('Database PID count is limited to 256',state['HostConfig']['PidsLimit']==256),
  ('Database does not publish a host port',not state['HostConfig']['PortBindings']),
- ('Database main process runs as UID 999',compose('exec','-T','db','sh','-c',"awk '/^Uid:/{print $2}' /proc/1/status").strip()=='999'),
+ ('Database main process runs as expected non-root UID',compose('exec','-T','db','sh','-c',"awk '/^Uid:/{print $2}' /proc/1/status").strip()==os.environ.get('DB_EXPECTED_UID','999') and os.environ.get('DB_EXPECTED_UID','999')!='0'),
 ]:
     if not condition:raise AssertionError(name)
     result['checks'].append(name)

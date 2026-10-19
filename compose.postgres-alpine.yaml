@@ -1,0 +1,9 @@
+# Use with compose.yaml and an isolated project/volume. Never attach Debian PGDATA.
+services:
+  db:
+    build:
+      context: .
+      dockerfile: images/postgres-alpine/Dockerfile
+    image: ${POSTGRES_ALTERNATIVE_IMAGE:-docker-lab-postgres-alpine:local}
+    environment:
+      POSTGRES_INITDB_ARGS: --encoding=UTF8 --locale=C.UTF-8 --locale-provider=icu --icu-locale=en-US
